@@ -6,6 +6,7 @@ def main():
     host = HostScanner()
     port = Port_Scanner
     logs = Logger()
+    service = Service_Detector()
     print()
     ip = input("Enter your IP: ")
     valid_ip = validate_ip(ip)
@@ -33,13 +34,24 @@ def main():
                     report = port.scan(ip,port)
                     logs.log(report) # add this to all so data can be saved
                     print(f'Report for {port}: {report}')
+
                 elif choice == 2:
-                    pass
+                    start_port = int(input("What Port would you like to start with"))
+                    end_port = int(input("What Port would you like to end with"))
+                    report = port.scan_range(ip,start_port,end_port) #why wrong
+                    logs.log(report)
+                    print(f'Report for {start_port}-{end_port}: {report}')
+
                 elif choice == 3:
-                    pass
+                    port = int(input("What Port would you like to lookup"))
+                    report = service.lookup(port)
+                    logs.log(report)
+                    print(f'Report for {port}: {report}')
+
                 elif choice == 4:
                     output_file = input("What is the full file path of where you log saved:")
                     logs.save(output_file)
+
                 elif choice == 5:
                     pass
                 #find some way to check if log is empty and if they saved.
@@ -48,6 +60,7 @@ def main():
                 else:
                     print("Invalid Number")
                     print("Please Select 1-4")
+
             except ValueError:
                 print("Invalid Value")
 
